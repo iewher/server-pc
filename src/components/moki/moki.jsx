@@ -1,3 +1,7 @@
+/*
+Набор данных
+*/
+
 export const moki = [
   {
     id: 1,

@@ -4,7 +4,16 @@ import PageLayout from "../page-layout/page-layout";
 import Sidebar from "../sidebar/sidebar";
 import Content from "../content/content";
 
+/*
+Компонент Main
+Вызываем здесь Sidebar/Content
+*/
+
 export default function Main() {
+  /*
+Инициализируем состояние sidebar
+*/
+
   const [sidebarState, setSidebarState] = useState(false);
 
   return (

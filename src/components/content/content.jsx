@@ -3,13 +3,26 @@ import { moki } from "../moki/moki";
 import CardItem from "../card/card";
 import { Input, Checkbox, Spin } from "antd";
 import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom"; // Импортируем React Router
+import { useLocation } from "react-router-dom";
+
+/*
+Компонент Content
+*/
 
 export default function Content({ sidebarState }) {
-  const navigate = useNavigate(); // Используем useHistory для навигации
-  const location = useLocation(); // Используем useLocation для получения текущего пути
+  const navigate = useNavigate();
+
+  /*
+Получаем текущее местоположение
+*/
+
+  const location = useLocation();
 
   const queryParams = new URLSearchParams(location.search);
+
+  /*
+Инициализируем состояния
+*/
 
   const [searchValue, setSearchValue] = useState(
     queryParams.get("search_val") || ""
@@ -19,8 +32,11 @@ export default function Content({ sidebarState }) {
   );
   const [tagFilters, setTagFilters] = useState({});
 
+  /*
+Управляем жизненным циклом с помощью useEffect, передавая в массив зависимостей location.search
+*/
+
   useEffect(() => {
-    // Текущие параметры фильтрации из адресной строки
     const searchValFromQuery = queryParams.get("search_val") || "";
     const endpointTypeFromQuery = queryParams.get("endpoint_type") || "";
 
@@ -30,7 +46,7 @@ export default function Content({ sidebarState }) {
     const uniqueTags = [...new Set(moki.flatMap((item) => item.tags))];
     const initialTagFilters = {};
     uniqueTags.forEach((tag) => {
-      initialTagFilters[tag] = queryParams.get(tag) === "true"; // Загружаем параметры фильтров из адресной строки
+      initialTagFilters[tag] = queryParams.get(tag) === "true";
     });
     setTagFilters(initialTagFilters);
   }, [location.search]);
@@ -45,12 +61,16 @@ export default function Content({ sidebarState }) {
       newSearchParams.set(tag, value.toString());
     });
 
-    navigate(`?${newSearchParams.toString()}`); // Use navigate to update the URL
+    navigate(`?${newSearchParams.toString()}`);
   };
 
   useEffect(() => {
-    updateQueryString(); // Вызываем функцию для обновления адресной строки при изменении фильтров
+    updateQueryString();
   }, [searchValue, filterType, tagFilters]);
+
+  /*
+Создаем новый массив и перебираем там moki
+*/
 
   const filteredData = moki.filter((item) => {
     if (filterType && item.type !== filterType) {

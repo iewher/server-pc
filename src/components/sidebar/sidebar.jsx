@@ -2,6 +2,10 @@ import React from "react";
 import { MailOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
 
+/*
+Компонент Sidebar
+*/
+
 export default function Sidebar({ onClick }) {
   function getItem(label, icon, children, type) {
     return {
@@ -12,7 +16,10 @@ export default function Sidebar({ onClick }) {
     };
   }
 
-  // Функция для обновления адресной строки
+  /*
+Фукнция, добавляющая при нажатии на item в адресную строку /cmdb
+*/
+
   function updateAddress() {
     const currentPath = window.location.pathname;
     const newPath = "/cmdb";
@@ -26,6 +33,10 @@ export default function Sidebar({ onClick }) {
       getItem("CMDB", null, [getItem("Серверы и пк")], "group"),
     ]),
   ];
+
+  /*
+меню реализовано с помощью UI
+*/
 
   return (
     <div className="sidebar">

@@ -2,10 +2,26 @@ import React, { useState } from "react";
 import "../../scss/header/header.scss";
 import { Switch, Button } from "antd";
 
+/*
+Компонент Header
+*/
+
 export default function Header() {
+  /*
+Инициализириуем состояние для темной темы
+*/
+
   const [isLightTheme, setIsLightTheme] = useState(true);
 
+  /*
+Забираем элемент по id root
+*/
+
   const root = document.getElementById("root");
+
+  /*
+Фукнция, в которой проверяем класс у root, и при необходимости меняем на противополжный
+*/
 
   const onChange = () => {
     setIsLightTheme((prevTheme) => !prevTheme);
