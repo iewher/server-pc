@@ -1,11 +1,18 @@
 import React from "react";
+import { Card, Space } from "antd";
 
-export default function Card({ item }) {
+export default function CardItem({ item }) {
   return (
-    <div className="card" key={item.id}>
-      <p>Название: {item.name}</p>
-      <p>Тип: {item.type}</p>
-      <ul>
+    <Space direction="vertical" size={16}>
+      <Card
+        title={item.name}
+        style={{
+          width: 300,
+          boxShadow: '1px 2px 9px gray',
+          marginTop: '20px',
+        }}
+      >
+        <p>Тип: {item.type}</p>
         Теги:
         {item.tags.map((tag, index) => {
           return (
@@ -14,7 +21,7 @@ export default function Card({ item }) {
             </li>
           );
         })}
-      </ul>
-    </div>
+      </Card>
+    </Space>
   );
 }

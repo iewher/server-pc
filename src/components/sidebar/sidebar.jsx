@@ -1,27 +1,34 @@
-import React, { useState } from "react";
-import { AiOutlineArrowDown } from "react-icons/ai";
+import React from "react";
+import { MailOutlined } from "@ant-design/icons";
+import { Menu } from "antd";
 
 export default function Sidebar({ onClick }) {
-  const [state, setState] = useState(false);
-  const [active, setActive] = useState(true);
+  function getItem(label, key, icon, children, type) {
+    return {
+      key,
+      icon,
+      children,
+      label,
+      type,
+    };
+  }
 
-  const handleClick = () => {
-    setState(!state);
-  };
-
-  const handleActive = () => {
-    setActive(!active);
-    onClick(active);
-  };
+  const items = [
+    getItem("Навигация", "sub1", <MailOutlined />, [
+      getItem("CMDB", "g1", null, [getItem("Серверы и пк", "1")], "group"),
+    ]),
+  ];
 
   return (
     <div className="sidebar">
-      <button onClick={handleClick}>
-        CMDB <AiOutlineArrowDown height={"10px"} width={"10px"} />
-      </button>
-      <p className={state ? "text-active" : "text"} onClick={handleActive}>
-        Серверы и пк
-      </p>
+      <Menu
+        onClick={onClick}
+        style={{ width: 256 }}
+        defaultSelectedKeys={["1"]}
+        defaultOpenKeys={["sub1"]}
+        mode="inline"
+        items={items}
+      />
     </div>
   );
 }

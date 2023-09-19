@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { AiOutlineSearch } from "react-icons/ai";
 import { moki } from "../moki/moki";
-import Card from "../card/card";
+import CardItem from "../card/card";
+import { Input, Checkbox, Spin } from "antd";
 
 export default function Content({ sidebarState }) {
   const [searchValue, setSearchValue] = useState("");
@@ -70,63 +70,90 @@ export default function Content({ sidebarState }) {
     <div className="content">
       {sidebarState ? (
         <div className="active">
-          <h2>Фильтры</h2>
+          <h2
+            style={{
+              marginBottom: "10px",
+            }}
+          >
+            Фильтры
+          </h2>
           <div className="filters">
             <h1>Название</h1>
-            <input
+            <Input
               value={searchValue}
               placeholder="Поиск по названию..."
               onChange={handleSearchInputChange}
             />
-            <h1>Тип</h1>
+            <h1
+              style={{
+                marginBottom: "10px",
+              }}
+            >
+              Тип
+            </h1>
             <div className="checkbox">
-              <input
+              <Checkbox
                 type="checkbox"
                 id="server"
                 name="server"
                 value="Сервер"
                 checked={filterType === "Сервер"}
                 onChange={handleCheckboxChange}
-              />
-              <label htmlFor="server">Сервер</label>
+              >
+                Сервер
+              </Checkbox>
             </div>
             <div className="checkbox">
-              <input
+              <Checkbox
                 type="checkbox"
                 id="pc"
                 name="pc"
                 value="ПК"
                 checked={filterType === "ПК"}
                 onChange={handleCheckboxChange}
-              />
-              <label htmlFor="pc">ПК</label>
+              >
+                ПК
+              </Checkbox>
             </div>
-            <h1>Теги</h1>
+            <h1
+              style={{
+                marginBottom: "10px",
+              }}
+            >
+              Теги
+            </h1>
             {Object.keys(tagFilters).map((tag) => (
               <div className="checkbox" key={tag}>
-                <input
+                <Checkbox
                   type="checkbox"
                   id={tag}
                   name={tag}
                   value={tag}
                   checked={tagFilters[tag]}
                   onChange={handleTagCheckboxChange}
-                />
-                <label htmlFor={tag}>{tag}</label>
+                >
+                  {tag}
+                </Checkbox>
               </div>
             ))}
           </div>
           <h2>Карточки</h2>
           <div className="cards">
             {filteredData.map((item) => {
-              return <Card key={item.id} item={item} />;
+              return <CardItem key={item.id} item={item} />;
             })}
           </div>
         </div>
       ) : (
         <div className="unactive">
-          <AiOutlineSearch />
-          <p>Выберите категорию</p>
+          <Spin size="large" />
+          <p
+            style={{
+              marginTop: "30px",
+            }}
+          >
+            Ожидаем выбора в дереве
+          </p>
         </div>
       )}
     </div>
