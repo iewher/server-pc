@@ -7,7 +7,7 @@ export default function Header() {
 
   const root = document.getElementById("root");
 
-  const onChange = (checked) => {
+  const onChange = () => {
     setIsLightTheme((prevTheme) => !prevTheme);
     if (isLightTheme === true) {
       root.classList.remove("light");

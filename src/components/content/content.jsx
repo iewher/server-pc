@@ -2,41 +2,64 @@ import React, { useState, useEffect } from "react";
 import { moki } from "../moki/moki";
 import CardItem from "../card/card";
 import { Input, Checkbox, Spin } from "antd";
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom"; // Импортируем React Router
 
 export default function Content({ sidebarState }) {
-  const [searchValue, setSearchValue] = useState("");
-  const [filterType, setFilterType] = useState("");
+  const navigate = useNavigate(); // Используем useHistory для навигации
+  const location = useLocation(); // Используем useLocation для получения текущего пути
+
+  const queryParams = new URLSearchParams(location.search);
+
+  const [searchValue, setSearchValue] = useState(
+    queryParams.get("search_val") || ""
+  );
+  const [filterType, setFilterType] = useState(
+    queryParams.get("endpoint_type") || ""
+  );
   const [tagFilters, setTagFilters] = useState({});
 
-  /*
-    Получаем уникальные теги с moki
-  */
-
   useEffect(() => {
+    // Текущие параметры фильтрации из адресной строки
+    const searchValFromQuery = queryParams.get("search_val") || "";
+    const endpointTypeFromQuery = queryParams.get("endpoint_type") || "";
+
+    setSearchValue(searchValFromQuery);
+    setFilterType(endpointTypeFromQuery);
+
     const uniqueTags = [...new Set(moki.flatMap((item) => item.tags))];
     const initialTagFilters = {};
     uniqueTags.forEach((tag) => {
-      initialTagFilters[tag] = false;
+      initialTagFilters[tag] = queryParams.get(tag) === "true"; // Загружаем параметры фильтров из адресной строки
     });
     setTagFilters(initialTagFilters);
-  }, []);
+  }, [location.search]);
+
+  const updateQueryString = () => {
+    const newSearchParams = new URLSearchParams();
+
+    newSearchParams.set("search_val", searchValue);
+    newSearchParams.set("endpoint_type", filterType);
+
+    Object.entries(tagFilters).forEach(([tag, value]) => {
+      newSearchParams.set(tag, value.toString());
+    });
+
+    navigate(`?${newSearchParams.toString()}`); // Use navigate to update the URL
+  };
+
+  useEffect(() => {
+    updateQueryString(); // Вызываем функцию для обновления адресной строки при изменении фильтров
+  }, [searchValue, filterType, tagFilters]);
 
   const filteredData = moki.filter((item) => {
     if (filterType && item.type !== filterType) {
       return false;
     }
 
-    /*
-    Фильтрация по значению с поиска
-    */
-
     const nameMatch = item.name
       .toLowerCase()
       .includes(searchValue.toLowerCase());
-
-    /*
-    Фильтрация по выбранным тегам
-    */
 
     const tagMatch =
       Object.values(tagFilters).every((value) => !value) ||
@@ -72,7 +95,7 @@ export default function Content({ sidebarState }) {
         <div className="active">
           <h2
             style={{
-              marginTop: '10px',
+              marginTop: "10px",
               marginBottom: "10px",
             }}
           >
@@ -87,7 +110,7 @@ export default function Content({ sidebarState }) {
             />
             <h1
               style={{
-                marginTop: '10px',
+                marginTop: "10px",
                 marginBottom: "10px",
               }}
             >
@@ -119,7 +142,7 @@ export default function Content({ sidebarState }) {
             </div>
             <h1
               style={{
-                marginTop: '10px',
+                marginTop: "10px",
                 marginBottom: "10px",
               }}
             >

@@ -3,9 +3,8 @@ import { MailOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
 
 export default function Sidebar({ onClick }) {
-  function getItem(label, key, icon, children, type) {
+  function getItem(label, icon, children, type) {
     return {
-      key,
       icon,
       children,
       label,
@@ -13,18 +12,29 @@ export default function Sidebar({ onClick }) {
     };
   }
 
+  // Функция для обновления адресной строки
+  function updateAddress() {
+    const currentPath = window.location.pathname;
+    const newPath = "/cmdb";
+    if (currentPath !== newPath) {
+      window.history.pushState({}, "", newPath);
+    }
+  }
+
   const items = [
-    getItem("Навигация", "sub1", <MailOutlined />, [
-      getItem("CMDB", "g1", null, [getItem("Серверы и пк", "1")], "group"),
+    getItem("Навигация", <MailOutlined />, [
+      getItem("CMDB", null, [getItem("Серверы и пк")], "group"),
     ]),
   ];
 
   return (
     <div className="sidebar">
       <Menu
-        onClick={onClick}
+        onClick={(e) => {
+          onClick(e);
+          updateAddress();
+        }}
         style={{ width: 256 }}
-        defaultSelectedKeys={["1"]}
         defaultOpenKeys={["sub1"]}
         mode="inline"
         items={items}
