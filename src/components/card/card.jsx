@@ -7,8 +7,12 @@ export default function Card({ item }) {
       <p>Тип: {item.type}</p>
       <ul>
         Теги:
-        {item.tags.map((tag) => {
-          return <li>{tag}</li>;
+        {item.tags.map((tag, index) => {
+          return (
+            <li>
+              {index + 1}. {tag}
+            </li>
+          );
         })}
       </ul>
     </div>

@@ -3,7 +3,7 @@ import { AiOutlineArrowDown } from "react-icons/ai";
 
 export default function Sidebar({ onClick }) {
   const [state, setState] = useState(false);
-  const [active, setActive] = useState(false);
+  const [active, setActive] = useState(true);
 
   const handleClick = () => {
     setState(!state);
