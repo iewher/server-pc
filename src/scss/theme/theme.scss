@@ -1,0 +1,42 @@
+.dark {
+  .header {
+    background-color: #0f0f0f;
+
+    &-container {
+      button,
+      a {
+        color: white;
+      }
+
+      .button-dark {
+        color: white;
+      }
+    }
+  }
+
+  .main {
+    background-color: #0f0f0f;
+
+    &-container {
+      .content {
+        .active {
+          .filters {
+            h1 {
+              color: white;
+            }
+
+            .checkbox {
+              label {
+                color: white;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .footer {
+    background-color: #0f0f0f;
+  }
+}

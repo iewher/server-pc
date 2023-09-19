@@ -72,6 +72,7 @@ export default function Content({ sidebarState }) {
         <div className="active">
           <h2
             style={{
+              marginTop: '10px',
               marginBottom: "10px",
             }}
           >
@@ -86,6 +87,7 @@ export default function Content({ sidebarState }) {
             />
             <h1
               style={{
+                marginTop: '10px',
                 marginBottom: "10px",
               }}
             >
@@ -117,6 +119,7 @@ export default function Content({ sidebarState }) {
             </div>
             <h1
               style={{
+                marginTop: '10px',
                 marginBottom: "10px",
               }}
             >
